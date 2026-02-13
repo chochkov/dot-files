@@ -1,0 +1,12 @@
+[submodule "config/nvim/pack/github/start/copilot.vim"]
+	path = config/nvim/pack/github/start/copilot.vim
+	url = https://github.com/github/copilot.vim.git
+[submodule "config/nvim/pack/tpope/start/vim-commentary"]
+	path = config/nvim/pack/tpope/start/vim-commentary
+	url = git@github.com:tpope/vim-commentary.git
+[submodule "config/nvim/pack/tpope/start/vim-surround"]
+	path = config/nvim/pack/tpope/start/vim-surround
+	url = git@github.com:tpope/vim-surround.git
+[submodule "config/nvim/pack/wellle/start/targets.vim"]
+	path = config/nvim/pack/wellle/start/targets.vim
+	url = git@github.com:wellle/targets.vim.git
