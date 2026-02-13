@@ -52,69 +52,7 @@ export HISTSIZE=10000
 export HISTFILE=$HOME/.zsh_history
 export SAVEHIST=$HISTSIZE
 
-# aliases
-alias ls='ls -laGh'
-alias gpoh='git push origin HEAD'
-alias gcmm='git commit -m'
-alias d='docker'
-alias dcmp='docker-compose'
-alias grep="grep --color=auto"
-alias t="tmux"
-alias R="R --no-save"
-
-# Decrypt ~/.pgpass.gpg into a tmp file.
-pg_dump_safe() {
-    local TMP_PGPASS=$(mktemp /tmp/.pgpass.XXXXXX)
-    gpg -q -d ~/.pgpass.gpg > "$TMP_PGPASS"
-    chmod 0600 "$TMP_PGPASS"
-    ((sleep 2; rm -f "$TMP_PGPASS") & disown) > /dev/null 2>&1
-
-    PGPASSFILE="$TMP_PGPASS" command pg_dump "$@"
-}
-alias pg_dump=pg_dump_safe
-
-# Decrypt ~/.pgpass.gpg into a tmp file.
-psql_safe() {
-    local TMP_PGPASS=$(mktemp /tmp/.pgpass.XXXXXX)
-    gpg -q -d ~/.pgpass.gpg > "$TMP_PGPASS"
-    chmod 0600 "$TMP_PGPASS"
-    ((sleep 2; rm -f "$TMP_PGPASS") & disown) > /dev/null 2>&1
-
-    PGPASSFILE="$TMP_PGPASS" command psql "$@"
-}
-alias psql=psql_safe
-
-# Decrypt ~/.aws/credentials.gpg into a tmp file.
-aws_safe() {
-    local TMP_CREDS=$(mktemp /tmp/.aws_credentials.XXXXXX)
-    gpg -q -d ~/.aws/credentials.gpg > "$TMP_CREDS"
-    chmod 0600 "$TMP_CREDS"
-    ((sleep 2; rm -f "$TMP_CREDS") & disown) > /dev/null 2>&1
-
-    AWS_SHARED_CREDENTIALS_FILE="$TMP_CREDS" command aws "$@"
-}
-alias aws=aws_safe
-
-# Decrypt ~/.ssh/id_rsa.gpg into a tmp file.
-ssh_safe() {
-    local TMP_CREDS=$(mktemp /tmp/.ssh_id_rsa.XXXXXX)
-    gpg -q -d ~/.ssh/id_rsa.gpg > "$TMP_CREDS"
-    chmod 0600 "$TMP_CREDS"
-    ((sleep 2; rm -f "$TMP_CREDS") & disown) > /dev/null 2>&1
-
-    command ssh -i "$TMP_CREDS" "$@"
-}
-alias ssh=ssh_safe
-
-# nvm stuff TODO: move it to a separate file and source it here
-export NVM_DIR="$HOME/.nvm"
-
-lazy_nvm_load() {
-  unset -f nvm node npm npx
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-}
-
-nvm()  { lazy_nvm_load; nvm "$@" }
-node() { lazy_nvm_load; node "$@" }
-npm()  { lazy_nvm_load; npm "$@" }
-npx()  { lazy_nvm_load; npx "$@" }
+# Source additional configuration files
+for file in zsh/*.zsh; do
+  [ -f "$file" ] && source "$file"
+done

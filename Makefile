@@ -20,6 +20,8 @@ FILES := \
 symlink:
 	# Neovim config and plugins
 	ln -sfn $(DOTFILES_DIR)/config/nvim $$HOME/.config/nvim
+	# Dotfiles
 	for file in $(FILES); do \
 		ln -sfn $(DOTFILES_DIR)/$$file $$HOME/.$$file; \
 	done
+	# Zsh modules (no symlink needed, sourced from ~/.dot-files/zsh/)
