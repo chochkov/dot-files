@@ -1,3 +1,6 @@
+# Capture the directory of this zshrc file
+ZSHRC_DIR="${${(%):-%x}:A:h}"
+
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:$PATH"
 
 if type brew &>/dev/null; then
@@ -53,6 +56,6 @@ export HISTFILE=$HOME/.zsh_history
 export SAVEHIST=$HISTSIZE
 
 # Source additional configuration files
-for file in zsh/*.zsh; do
+for file in $ZSHRC_DIR/zsh/*.zsh; do
   [ -f "$file" ] && source "$file"
 done

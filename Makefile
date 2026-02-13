@@ -24,4 +24,4 @@ symlink:
 	for file in $(FILES); do \
 		ln -sfn $(DOTFILES_DIR)/$$file $$HOME/.$$file; \
 	done
-	# Zsh modules (no symlink needed, sourced from ~/.dot-files/zsh/)
+	# Zsh modules (no symlink needed, sourced from ~/dot-files/zsh/)
