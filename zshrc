@@ -1,50 +1,18 @@
 export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:$PATH"
 
-# TODO optimize this by hardcoding the dir
 if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+  # This uses `brew --prefix` originally, but it's removed for performance
+  FPATH=/opt/homebrew/share/zsh/site-functions:$FPATH
 fi
 
 autoload -Uz compinit && compinit
-
-# [ -s "/Users/nikola/.scm_breeze/scm_breeze.sh" ] && source "/Users/nikola/.scm_breeze/scm_breeze.sh"
-
-###
 
 if [ -n "$__EXECUTED_GIT_COMMAND" ]; then
     update_current_git_vars
     unset __EXECUTED_GIT_COMMAND
 fi
 
-###
-
-# # Initialize colors.
-# autoload -U colors
-# colors
-#
-# # Allow for functions in the prompt.
-# setopt PROMPT_SUBST
-#
-# # Autoload zsh functions.
-# fpath=(~/.zsh/functions $fpath)
-# autoload -U /usr/local/share/zsh/site-functions/*(:t)
-#
-# # Enable auto-execution of functions.
-# typeset -ga preexec_functions
-# typeset -ga precmd_functions
-# typeset -ga chpwd_functions
-#
-# # Append git functions needed for prompt.
-# preexec_functions+='preexec_update_git_vars'
-# precmd_functions+='precmd_update_git_vars'
-# chpwd_functions+='chpwd_update_git_vars'
-# */
-#
-# Set the prompt.
-# PROMPT=$'%{${fg[cyan]}%}%B%~%b$(prompt_git_info)%{${fg[default]}%} '
-
 set -o vi
-
 
 bindkey -v
 bindkey '^R' history-incremental-search-backward

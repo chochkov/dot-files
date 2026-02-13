@@ -1,0 +1,36 @@
+# use vi-style shortcuts instead of defaul emacs
+set editing-mode vi
+set keymap vi
+set convert-meta off
+
+# don't strip characters to 7 bits when reading
+set input-meta on
+
+# display characters with the eighth bit set directly rather than
+# as meta-prefixed characters
+set output-meta on
+
+set completion-ignore-case on
+
+# ask only if possibilities > 150
+set completion-query-items 150
+
+# single <Tab> hit shows all possible completions
+set show-all-if-ambiguous on
+
+# Completed names which are symbolic links to directories have a slash appended.
+set mark-symlinked-directories on
+
+set visible-stats on
+
+$if Bash
+  Space: magic-space
+$endif
+
+"(": "\C-v()\e[D"
+"\"": "\C-v\"\C-v\"\e[D""]
+
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+set show-all-if-ambiguous on
+set completion-ignore-case on
