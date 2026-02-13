@@ -42,7 +42,7 @@ zstyle ':vcs_info:git:*' formats '%b%a'
 setopt prompt_subst
 autoload -Uz vcs_info
 precmd() { vcs_info }
-PROMPT=$'%F{cyan}%~ %f${vcs_info_msg_0_} %F{green}$%f '
+PROMPT=$'%F{cyan}%~ %f${vcs_info_msg_0_:+${vcs_info_msg_0_} }%F{green}$%f '
 
 # -N shows line numbers; -X exists straight away on less-than-a-page; -i case
 # insensitive search, -R color handling
