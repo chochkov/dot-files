@@ -13,3 +13,8 @@ zle -N vi-down-line-or-beginning-search
 
 bindkey -M vicmd 'k' vi-up-line-or-beginning-search
 bindkey -M vicmd 'j' vi-down-line-or-beginning-search
+
+# Disable - and + default vim bindings (up/down history). They are quite
+# annoying and I never use them productively (I use j or k)
+bindkey -M vicmd -r -- '-'
+bindkey -M vicmd -r -- '+'

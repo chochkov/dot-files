@@ -21,3 +21,7 @@ symlink:
 		ln -sfn $(DOTFILES_DIR)/$$file $$HOME/.$$file; \
 	done
 	# Zsh modules (no symlink needed, sourced from ~/dot-files/zsh/)
+
+test:
+	@echo "Running targets.zsh tests..."
+	@zsh tests/test_targets.zsh
