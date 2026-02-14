@@ -135,3 +135,5 @@ bindkey -M vicmd "ci'" ci-single-quote
 bindkey -M vicmd 'ci"' ci-double-quote
 bindkey -M vicmd 'ci[' ci-bracket
 bindkey -M vicmd 'ci(' ci-paren
+bindkey -M vicmd 'cib' ci-paren
+bindkey -M vicmd 'ciB' ci-bracket
