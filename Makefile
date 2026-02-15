@@ -1,7 +1,6 @@
 # TODO:
 # * figure out the secrets files with gpg script
 # * setup vim plugins (lion?, replace? what else chat about best setup)
-# * nvim doesnt take config - e.g. leader
 # * set up dev env for SQL with tmux vim etc.
 
 DOTFILES_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
