@@ -11,7 +11,8 @@ FILES := \
 	tmux.conf \
 	vimrc \
 	inputrc \
-	psqlrc
+	psqlrc \
+	gitconfig
 
 symlink:
 	# Neovim config and plugins
