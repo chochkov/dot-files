@@ -1,3 +1,8 @@
+# Include machine-specific config (user.name, user.email, etc.)
+# Create ~/.gitconfig.local with your personal settings
+[include]
+	path = ~/.gitconfig.local
+
 [color "status"]
 	added = yellow
 	changed = green
