@@ -10,3 +10,6 @@
 [submodule "config/nvim/pack/wellle/start/targets.vim"]
 	path = config/nvim/pack/wellle/start/targets.vim
 	url = git@github.com:wellle/targets.vim.git
+[submodule "config/nvim/pack/plugins/start/kanagawa.nvim"]
+	path = config/nvim/pack/plugins/start/kanagawa.nvim
+	url = https://github.com/rebelot/kanagawa.nvim.git
