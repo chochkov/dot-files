@@ -1,3 +1,7 @@
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 # Capture the directory of this zshrc file
 ZSHRC_DIR="${${(%):-%x}:A:h}"
 

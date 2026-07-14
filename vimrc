@@ -6,8 +6,33 @@ syntax enable
 set ruler
 set et sw=2 ts=2 sts=2
 
-" Delete whitespace at the end of the file.
-autocmd BufWritePre * %s/\s\+$//e
+" Delete whitespace at the end of the file without moving the cursor.
+function! RestoreWindowState(view, cursor) abort
+  call winrestview(a:view)
+  call setpos('.', a:cursor)
+endfunction
+
+function! TrimTrailingWhitespace() abort
+  if &buftype !=# '' || !&modifiable
+    return
+  endif
+
+  let l:view = winsaveview()
+  let l:cursor = getcurpos()
+  let l:search = @/
+
+  try
+    silent! keepjumps keeppatterns lockmarks %s/\s\+$//e
+  finally
+    let @/ = l:search
+    call RestoreWindowState(l:view, l:cursor)
+  endtry
+endfunction
+
+augroup trim_trailing_whitespace
+  autocmd!
+  autocmd BufWritePre * call TrimTrailingWhitespace()
+augroup END
 
 " gist.vim
 " let g:gist_clip_command = 'pbcopy'
@@ -81,61 +106,3 @@ cnoreabbrev ag Ack
 cnoreabbrev aG Ack
 cnoreabbrev Ag Ack
 cnoreabbrev AG Ack
-
-
-" My Plugin
-
-function! AdjustTmuxPanes()
-    " Determine the height of the tmux window
-    let l:height = system("tmux display -p '#{pane_height}'")
-
-    " Calculate 75% of the height for the top pane
-    let l:top_height = float2nr(l:height * 0.75)
-
-    " Resize the top pane
-    call system("tmux resize-pane -y " . l:top_height)
-
-    " The bottom pane will automatically adjust, but if you want
-    " to explicitly set the bottom pane, you could calculate its
-    " height and use the `resize-pane` command with the `-D` option.
-endfunction
-
-
-function! TmuxSplitSendKeys()
-    " Check if we are within a tmux session
-    if empty($TMUX)
-        echo "Not in a tmux session."
-        return
-    endif
-
-    " Check if the current tmux window is split in more than two panes
-    let panes = system('tmux list-panes | wc -l')
-    if panes > 1
-        echo "More than one pane exists."
-        return
-    endif
-
-    " Split tmux pane vertically
-    if panes == 1
-        call system('tmux split-window -v')
-    endif
-
-    " TODO: fix this to work with the current pane because now it resizes.
-    " call AdjustTmuxPanes()
-
-    " " Get the tmux prefix key
-    " TODO: here we dont use this because the interpolation below doesnt work
-    " let prefix = system("tmux show-options -g | grep '^prefix' | awk '{print $2}'")
-    " let prefix = substitute(prefix, "\n$", "", "")
-
-    " Send the specified key sequence to the lower pane using the obtained prefix key
-    " Escape <prefix> k Enter
-    call system('tmux send-keys -t .bottom Escape C-b k Enter')
-endfunction
-
-command! TmuxSplitSend :call TmuxSplitSendKeys()
-" exectute this on file save for *.sql files
-autocmd BufWritePost *.sql call TmuxSplitSendKeys()
-
-"
-"" autocmd BufWritePost * call TmuxSplitSendKeys()
