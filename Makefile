@@ -40,6 +40,7 @@ symlink:
 	# Zsh modules (no symlink needed, sourced from ~/dot-files/zsh/)
 	# Claude:
 	ln -sfn $(DOTFILES_DIR)/agents/claude/CLAUDE.md $$HOME/.claude/CLAUDE.md
+	ln -sfn $(DOTFILES_DIR)/agents/claude/skills $$HOME/.claude/skills
 
 test:
 	@echo "Running targets.zsh tests..."
