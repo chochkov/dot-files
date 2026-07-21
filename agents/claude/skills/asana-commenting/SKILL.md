@@ -28,7 +28,9 @@ This check is skipped only if the user has already dictated the exact wording to
 - Casual register, not formal.
 - Write in first person, as the task owner (e.g. "Done, moving this to review" not "Claude has completed this task").
 - Avoid verbosity: no restating the task, no preamble, no closing pleasantries. Prefer one or two short sentences/lines over paragraphs.
-- Plain text by default. Only reach for `html_text` when a mention or light markup (`<strong>`, `<code>`, a list) is actually needed.
+- No throat-clearing intros or boilerplate framing phrases — e.g. "Where things stand:", "Quick update:", "Just wanted to note that...". Go straight to the substance, first word.
+- Use `html_text` freely for structure, not just when a mention forces it: `<strong>` to emphasize key words/status, `<ul>`/`<li>` bullet lists to break up multiple points, and headings (`<strong>` on a short line, since Asana comments don't render `<h1>`-style headings) to separate sections when a comment covers more than one topic. Favor bullets and bold over a single dense paragraph whenever there's more than one point to make.
+- Plain text is still fine for a single short one-line update with nothing to emphasize or list — don't force structure onto a trivial comment.
 
 ## Converting Names to @-Mentions
 

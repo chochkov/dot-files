@@ -45,3 +45,13 @@ symlink:
 test:
 	@echo "Running targets.zsh tests..."
 	@zsh tests/test_targets.zsh
+
+# Installs and (re)loads the launchd agent that reaps idle psql SSH tunnels
+# (see zsh/pg_tunnels.zsh, zsh/wrappers.zsh, scripts/pg-tunnel-reaper.sh).
+# Separate from `symlink` since it starts a running background service.
+install-pg-tunnel-reaper:
+	mkdir -p $$HOME/Library/LaunchAgents
+	ln -sfn $(DOTFILES_DIR)/launchagents/local.pg-tunnel-reaper.plist \
+		$$HOME/Library/LaunchAgents/local.pg-tunnel-reaper.plist
+	launchctl unload $$HOME/Library/LaunchAgents/local.pg-tunnel-reaper.plist 2>/dev/null || true
+	launchctl load -w $$HOME/Library/LaunchAgents/local.pg-tunnel-reaper.plist
