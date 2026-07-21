@@ -13,7 +13,7 @@ Personal dotfiles, symlinked into `$HOME` via `make symlink`. Files of note:
 - `config/nvim/` — Neovim config; plugins are vendored under `pack/<vendor>/start/<plugin>` (native Vim8/Neovim packages, not a plugin manager). `vimrc` sources the legacy `~/.vimrc` then layers Neovim-only config (colorscheme) on top.
 - `gitconfig` — includes `~/.gitconfig.local` for machine-specific `user.name`/`user.email`; don't put personal identity info directly in the repo's `gitconfig`.
 - `agents/claude/CLAUDE.md` — this is the *global* `~/.claude/CLAUDE.md`, symlinked by `make symlink`. It's a private, user-wide instruction file (currently just the PII/privacy rule), separate in purpose from this repo-level CLAUDE.md.
-- `agents/claude/skills/` — the *global* `~/.claude/skills/` directory (the whole folder is symlinked by `make symlink`, mirroring the zsh auto-sourcing convention above — drop a new `<skill-name>/SKILL.md` in here and it's picked up with no extra wiring). Currently just `asana-commenting/`, which encodes personal tone/mention conventions for posting Asana comments.
+- `agents/claude/skills/` — the *global* `~/.claude/skills/` directory (the whole folder is symlinked by `make symlink`, mirroring the zsh auto-sourcing convention above — drop a new `<skill-name>/SKILL.md` in here and it's picked up with no extra wiring). `asana-commenting/` encodes personal tone/mention conventions for posting Asana comments; `asana-catchup/` is a read-only cross-project digest (newly-assigned + stale tasks) over the Asana MCP connector.
 
 ## Commands
 
