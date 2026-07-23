@@ -1,6 +1,6 @@
 ---
 name: asana-catchup
-description: This skill should be used when the user asks to "catch me up on Asana", "what's new in Asana", "asana standup", "asana digest", or otherwise wants a read-only summary of what changed on their Asana workload. Surfaces newly-assigned/recently-active tasks and stale tasks that haven't moved in a while, grouped by project, within the flowkey workspace.
+description: This skill should be used when the user asks to "catch me up on Asana", "what's new in Asana", "asana standup", "asana digest", "check my mentions", or otherwise wants a read-only summary of what changed on their Asana workload. Surfaces newly-assigned/recently-active tasks, stale tasks that haven't moved in a while, and recent @mentions, grouped by project, within the flowkey workspace.
 ---
 
 # Asana Catch-up
@@ -15,14 +15,22 @@ Prefer `search_tasks` (assignee_any=me, completed=false) since it supports serve
 
 Always fetch `opt_fields` including at minimum: `name,due_on,due_at,created_at,modified_at,permalink_url,projects.name,completed`.
 
+For mentions there is no direct "mentions" endpoint on this connector. Build the candidate list with `search_tasks` using `followers_any=me` (mentioning someone adds them as a follower/collaborator) instead of `assignee_any=me`, sorted by `modified_at` descending, `modified_at_after` set to the mention lookback (default 7 days). Then, for each candidate task (most-recent first, capped — see Buckets below), call `get_task_stories` with `opt_fields=text,created_at,created_by.name,type,resource_subtype` and look for either:
+
+- a system story with `resource_subtype: mentioned_comment_reminder_story` — this is the reliable Asana-generated signal that a comment mentioned the user, or
+- a `comment_added` story whose text references the user (their profile link or name).
+
+Skip tasks assigned to the user themselves where the only stories are the user's own edits — those are noise, not mentions from someone else.
+
 ## Buckets
 
 Default lookback windows — adjust if the user asks for a different window (e.g. "stale for over a month"):
 
 - **Newly assigned / active** — incomplete tasks with `created_at` in the last 7 days, OR `modified_at` in the last 3 days. This is a proxy, not a precise "assigned to you" event: the Asana API exposed here has no clean "assigned_at" field, so recently-created-and-assigned-to-you or recently-touched-while-assigned-to-you is the closest available signal. Say so if the user asks how "newly assigned" is determined.
 - **Stale, needs a nudge** — incomplete tasks with `modified_at` between 14 and 60 days ago. This window is deliberate: real workloads accumulate years of untouched backlog (tasks from long-closed projects, years-old "someday" items), and a stale bucket with no upper bound gets swamped by that graveyard instead of surfacing what's actually actionable — stuff that went quiet recently enough that a nudge still makes sense. Mention in the output that anything older than 60 days was excluded as long-term backlog, and offer to widen the window if the user asks for it.
+- **Recent mentions** — comments from someone else that @mentioned the user in the last 7 days (adjust if the user asks for a different window). Completed or incomplete, doesn't matter. Only check the most-recently-modified candidates from the `followers_any=me` search (cap at ~20 `get_task_stories` calls — say how many candidates were skipped past the cap, since this is a sampled sweep, not exhaustive). Mark each mention as "needs reply" or "replied" by checking whether a later `comment_added` story from the user exists after the mention's timestamp on that task.
 
-Sort "newly assigned" newest-first (by `modified_at` or `created_at`, whichever triggered inclusion). Sort "stale" by `modified_at` descending too — the task that *just* crossed into staleness (closest to 14 days) belongs at the top, since it's the one most likely to still be worth a nudge; a task quiet for 59 days is lower-priority than one quiet for 15.
+Sort "newly assigned" newest-first (by `modified_at` or `created_at`, whichever triggered inclusion). Sort "stale" by `modified_at` descending too — the task that *just* crossed into staleness (closest to 14 days) belongs at the top, since it's the one most likely to still be worth a nudge; a task quiet for 59 days is lower-priority than one quiet for 15. Sort "recent mentions" newest-first by the mention's `created_at`.
 
 Cap each bucket at 15 tasks; if more match, say how many were truncated rather than silently dropping them.
 
@@ -34,5 +42,6 @@ Group each bucket by project (from `projects[].name`; use "No project" if empty)
 - Due date if set
 - For "newly assigned": how recently created/touched (e.g. "created 2d ago")
 - For "stale": how long since last touched (e.g. "untouched 23d")
+- For "recent mentions": who mentioned the user and when (e.g. "mentioned by Alice, 2d ago"), plus "needs reply" or "replied"
 
 Keep it terse — this is a scan-and-triage view, not a report. No preamble, no closing summary paragraph. If a bucket is empty, say so in one line rather than omitting the section silently.
