@@ -41,6 +41,7 @@ symlink:
 	# Claude:
 	ln -sfn $(DOTFILES_DIR)/agents/claude/CLAUDE.md $$HOME/.claude/CLAUDE.md
 	ln -sfn $(DOTFILES_DIR)/agents/claude/skills $$HOME/.claude/skills
+	ln -sfn $(DOTFILES_DIR)/agents/claude/settings.json $$HOME/.claude/settings.json
 
 test:
 	@echo "Running targets.zsh tests..."
