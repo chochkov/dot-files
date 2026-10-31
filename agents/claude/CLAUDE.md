@@ -17,30 +17,3 @@ Drop the glossary. Write in plain, direct English. Use short sentences and
 active voice. Avoid AI buzzwords, abstract metaphors, and invented terminology.
 Explain any technical term you must use.
 
-### Commits: Conventional Commits 1.0.0
-
-The rules below are the operative subset of the spec
-(https://www.conventionalcommits.org/en/v1.0.0/ — a reference for human
-readers). Apply them as written; never fetch the spec.
-
-- Subject: `<type>(<scope>): <description>` — imperative, lower-case, no
-  trailing period, at most 72 characters.
-- Types: `feat` (new capability) and `fix` (bug fix) as the spec defines them;
-  otherwise `docs`, `test`, `refactor`, `perf`, `build`, `ci`, `chore`. Pick by
-  the change's intent, not by which files it touches.
-- Scope is optional: the area touched (e.g. `rbac`, `schema`). Omit it when the
-  change is repo-wide.
-- Breaking change: mark the subject with `!` after the type/scope AND add a
-  `BREAKING CHANGE:` footer saying what breaks and what callers must do.
-- Body: explain why the change exists and what the diff cannot show. Wrap at 72.
-- Footers are git trailers (`Refs: #123`, `Co-Authored-By: ...`).
-
-### PR descriptions
-
-- Open with what the PR does and why, readable without the diff.
-- Call out behavior changes, breaking changes, and anything a reviewer must not
-  miss. If the PR is part of a stack, say where it sits.
-- Say what is deliberately out of scope when the scope could be misread.
-- Verification: what was actually run and its result (test counts, commands).
-  Never claim "should work" — if it was not run, say so.
-- Link the issues the PR closes or touches.
