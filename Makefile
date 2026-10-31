@@ -40,7 +40,13 @@ symlink:
 	# Zsh modules (no symlink needed, sourced from ~/dot-files/zsh/)
 	# Claude:
 	ln -sfn $(DOTFILES_DIR)/agents/claude/CLAUDE.md $$HOME/.claude/CLAUDE.md
-	ln -sfn $(DOTFILES_DIR)/agents/claude/skills $$HOME/.claude/skills
+	# Skills are linked one by one: ~/.claude/skills must stay a real
+	# directory, because Claude Code writes its own state there (synced/,
+	# .trash/) and a whole-directory symlink would pull that into this repo.
+	mkdir -p $$HOME/.claude/skills
+	for s in $(DOTFILES_DIR)/agents/claude/skills/*/; do \
+		ln -sfn "$${s%/}" "$$HOME/.claude/skills/$$(basename $$s)"; \
+	done
 	ln -sfn $(DOTFILES_DIR)/agents/claude/settings.json $$HOME/.claude/settings.json
 
 test:
