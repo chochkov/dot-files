@@ -11,9 +11,8 @@ names, or any other PII. Use placeholder values instead:
 This applies even when the user mentions their own details in conversation
 for context — do not echo them into files.
 
-## Commit Messages & PR Descriptions
+## Commit Messages, PR Descriptions, Code Comments
 
 Drop the glossary. Write in plain, direct English. Use short sentences and
 active voice. Avoid AI buzzwords, abstract metaphors, and invented terminology.
 Explain any technical term you must use.
-

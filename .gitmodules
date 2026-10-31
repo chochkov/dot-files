@@ -19,3 +19,6 @@
 [submodule "config/nvim/pack/dyng/start/ctrlsf.vim"]
 	path = config/nvim/pack/dyng/start/ctrlsf.vim
 	url = https://github.com/dyng/ctrlsf.vim.git
+[submodule "config/nvim/pack/lewis6991/start/gitsigns.nvim"]
+	path = config/nvim/pack/lewis6991/start/gitsigns.nvim
+	url = https://github.com/lewis6991/gitsigns.nvim.git
