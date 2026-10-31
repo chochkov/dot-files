@@ -19,7 +19,9 @@ Explain any technical term you must use.
 
 ### Commits: Conventional Commits 1.0.0
 
-Follow https://www.conventionalcommits.org/en/v1.0.0/ :
+The rules below are the operative subset of the spec
+(https://www.conventionalcommits.org/en/v1.0.0/ — a reference for human
+readers). Apply them as written; never fetch the spec.
 
 - Subject: `<type>(<scope>): <description>` — imperative, lower-case, no
   trailing period, at most 72 characters.
