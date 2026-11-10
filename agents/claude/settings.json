@@ -23,5 +23,9 @@
   "skillOverrides": {
     "anthropic-skills:metabase-usage": "user-invocable-only",
     "metabase-usage": "user-invocable-only"
+  },
+  "env": {
+    "CLAUDE_CODE_SUBAGENT_MODEL": "sonnet",
+    "CLAUDE_CODE_SUBAGENT_EFFORT": "high"
   }
 }

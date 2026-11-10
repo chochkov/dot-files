@@ -16,3 +16,8 @@ for context — do not echo them into files.
 Drop the glossary. Write in plain, direct English. Use short sentences and
 active voice. Avoid AI buzzwords, abstract metaphors, and invented terminology.
 Explain any technical term you must use.
+
+## Subagents
+
+For subagents that analyse data, write SQL, or review code, pass `model: "opus"`
+and `effort: "xhigh"`.
